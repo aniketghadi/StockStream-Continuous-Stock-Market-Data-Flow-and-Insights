@@ -1,0 +1,50 @@
+wget https://downloads.apache.org/kafka/3.4.1/kafka_2.12-3.4.1.tgz
+
+tar -xvf kafka_2.12-3.4.1.tgz
+
+To do this , you can follow any of the 2 approaches shared belwo --
+Do a "sudo nano config/server.properties" - change ADVERTISED_LISTENERS to public ip of the EC2 instance
+
+kafka server is running on private DNS and it should ideally be running on a public DNS - so that we can access our EC2 machine from outside of the network
+
+
+wget https://download.oracle.com/java/20/latest/jdk-20_linux-x64_bin.tar.gz
+tar -xvf jdk-20_linux-x64_bin.tar.gz
+
+
+ sudo mv jdk-20.0.1 /usr/share/
+ 
+ sudo vim /etc/profile
+ 
+export JAVA_HOME=/usr/share/jdk-20.0.1
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+
+commit changes by :wq
+
+check again if changes reflected in the profile by: cat vim /etc/profile
+
+close the existing session of command prompt and relogin to check the java version
+
+java -version
+cd kafka_2.12-3.4.1
+
+
+
+
+
+
+
+Duplicate the session & enter in a new console --
+cd kafka_2.12-3.4.1
+bin/kafka-topics.sh --create --topic kafka_test --bootstrap-server 54.91.134.37:9092 --replication-factor 1 --partitions 1
+
+Start Producer:
+--------------------------
+bin/kafka-console-producer.sh --topic kafka_test --bootstrap-server 54.91.134.37:9092
+
+Start Consumer:
+-------------------------
+Duplicate the session & enter in a new console --
+cd kafka_2.12-3.4.1
+bin/kafka-console-consumer.sh --topic kafka_test --bootstrap-server 54.91.134.37:9092
